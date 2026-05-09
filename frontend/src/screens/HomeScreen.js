@@ -32,7 +32,7 @@ function HomeScreen() {
     const fetchData = async () => {
       dispatch({ type: "FETCH_REQUEST" });
       try {
-        const result = await axios.get("/api/products");
+        const result = await axios.get("https://onestore-5wdx.onrender.com/api/products");
         dispatch({ type: "FETCH_SUCCESS", payload: result.data });
       } catch (err) {
         dispatch({ type: "FETCH_FAIL", payload: err.message });
@@ -55,11 +55,12 @@ function HomeScreen() {
           <MessageBox variant="danger">{error}</MessageBox>
         ) : (
           <Row>
-            {products.map((product) => (
-              <Col key={product.slug} sm={6} md={4} lg={3} className="mb-3">
-                <Product product={product}></Product>
-              </Col>
-            ))}
+            {Array.isArray(products) &&
+  products.map((product) => (
+    <Col key={product.slug} sm={6} md={4} lg={3} className="mb-3">
+      <Product product={product}></Product>
+    </Col>
+  ))}
           </Row>
         )}
       </div>
